@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="City to Sky">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+</head>
+<body>
+<title>City to Sky Receipts</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one-thumb phone column (form, then a boarding-pass style receipt); two columns on wide screens. */
+:root{
+  --bg:#E8EDF3; --surface:#FFFFFF; --ink:#14213A; --muted:#58677E; --line:#C9D3DF;
+  --accent:#0B5BD0; --on-accent:#FFFFFF; --signal:#F2B705; --on-signal:#14213A; --warn:#A8320F;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1524; --surface:#172238; --ink:#E9EFF8; --muted:#9BAAC0; --line:#2D3B57;
+    --accent:#77ABFF; --on-accent:#0D1524; --signal:#F2B705; --on-signal:#14213A; --warn:#FF9C7A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1524; --surface:#172238; --ink:#E9EFF8; --muted:#9BAAC0; --line:#2D3B57;
+  --accent:#77ABFF; --on-accent:#0D1524; --signal:#F2B705; --on-signal:#14213A; --warn:#FF9C7A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--body);padding-inline:16px;padding-block:0 40px}
+.wrap{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:20px}
+
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:16px 4px}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{width:44px;height:44px;flex:none;border-radius:10px;outline:1px solid var(--line)}
+.brand b{font:700 26px/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px}
+.tabs button{border:0;background:none;color:var(--muted);font:600 15px/1 var(--body);padding:10px 14px;border-radius:7px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--surface)}
+
+.cols{display:grid;gap:20px;grid-template-columns:1fr}
+@media (min-width:900px){.cols{grid-template-columns:minmax(0,1fr) minmax(0,420px);align-items:start}}
+.cols>*{min-width:0}
+.stack{display:flex;flex-direction:column;gap:16px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.panel h2{margin:0;font:700 15px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+label{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:500;color:var(--muted)}
+input,select,textarea{font:400 16px/1.3 var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 12px;width:100%;min-width:0}
+textarea{resize:vertical;min-height:60px}
+label{min-width:0}
+.row.wide-fields{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+input[type="datetime-local"]{-webkit-appearance:none;appearance:none;display:block;max-width:100%;min-height:46px;text-align:left}
+input::-webkit-date-and-time-value{text-align:left}
+:is(input,select,textarea,button,a):focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.note{font-size:14px;color:var(--muted);margin:0}
+.example{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;border:1px dashed var(--muted);border-radius:10px;padding:10px 12px;font-size:14px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 16px/1 var(--body);padding:14px 14px;border-radius:10px;cursor:pointer;text-decoration:none;text-align:center}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.small{padding:8px 12px;font-size:14px}
+.btn[aria-disabled="true"]{opacity:.5}
+.actions{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.actions .wide{grid-column:1/-1}
+#status{min-height:1.4em;font-size:14px;color:var(--muted);margin:0}
+#status.bad{color:var(--warn)}
+
+/* The receipt */
+.receipt{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.r-head{background:var(--ink);color:var(--surface);padding:16px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.r-head b{font:700 28px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;overflow-wrap:anywhere}
+.r-head span{font:500 13px/1.3 var(--mono);text-align:right}
+.r-body{padding:16px;display:flex;flex-direction:column;gap:16px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kv div{min-width:0;overflow-wrap:anywhere}
+.cap{display:block;font:600 12px/1.2 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.route{display:grid;grid-template-columns:14px 1fr;column-gap:12px}
+.route .rail{grid-row:1/3;display:flex;flex-direction:column;align-items:center;padding-block:6px}
+.route .dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--ink);flex:none}
+.route .dot.end{background:var(--signal);border-color:var(--signal)}
+.route .rail i{flex:1;width:0;border-left:2px dashed var(--line);margin-block:3px}
+.route .stop{min-width:0;overflow-wrap:anywhere;font-weight:600;font-size:17px;line-height:1.3}
+.route .stop+.stop{margin-top:14px}
+.perf{border-top:2px dashed var(--line)}
+.lines{display:flex;flex-direction:column;gap:6px;font:400 14px/1.4 var(--mono);font-variant-numeric:tabular-nums}
+.lines div{display:flex;justify-content:space-between;gap:12px}
+.lines .total{font:700 30px/1.1 var(--display);letter-spacing:.03em;padding-top:10px;margin-top:4px;border-top:1px solid var(--line);align-items:baseline}
+.r-foot{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+
+.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.hist li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.hist .who{min-width:0;flex:1 1 200px;overflow-wrap:anywhere}
+.hist .who small{display:block;color:var(--muted);font:400 13px/1.4 var(--mono)}
+.hist .amt{font:500 16px/1 var(--mono);font-variant-numeric:tabular-nums}
+.hist .ops{display:flex;gap:8px}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#14213A"/><rect x="10" y="37" width="9" height="17" fill="#FFFFFF"/><rect x="21" y="30" width="11" height="24" fill="#FFFFFF"/><rect x="23.5" y="25" width="6" height="6" fill="#FFFFFF"/><rect x="34" y="41" width="8" height="13" fill="#FFFFFF"/><rect x="44" y="34" width="10" height="20" fill="#FFFFFF" opacity=".55"/><rect x="12" y="40" width="2.2" height="2.6" fill="#14213A"/><rect x="12" y="45" width="2.2" height="2.6" fill="#14213A"/><rect x="15" y="40" width="2.2" height="2.6" fill="#14213A"/><rect x="15" y="45" width="2.2" height="2.6" fill="#14213A"/><rect x="23.6" y="33" width="2.2" height="2.6" fill="#14213A"/><rect x="23.6" y="38" width="2.2" height="2.6" fill="#14213A"/><rect x="23.6" y="43" width="2.2" height="2.6" fill="#14213A"/><rect x="27.4" y="33" width="2.2" height="2.6" fill="#14213A"/><rect x="27.4" y="38" width="2.2" height="2.6" fill="#14213A"/><rect x="27.4" y="43" width="2.2" height="2.6" fill="#14213A"/><rect x="36.9" y="44" width="2.2" height="2.6" fill="#14213A"/><rect x="46.2" y="37" width="2.2" height="2.6" fill="#14213A"/><rect x="46.2" y="42" width="2.2" height="2.6" fill="#14213A"/><rect x="49.8" y="37" width="2.2" height="2.6" fill="#14213A"/><rect x="49.8" y="42" width="2.2" height="2.6" fill="#14213A"/><path d="M11 20 C 23 19.5, 36 17, 46 11.6" fill="none" stroke="#F2B705" stroke-width="3.5" stroke-linecap="round"/><polygon points="54,8 47.9,16.4 43.7,7" fill="#F2B705"/></svg><b id="brandName">City to Sky</b></div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button id="tab-new" role="tab" aria-selected="true" data-view="new">Receipt</button>
+      <button id="tab-history" role="tab" aria-selected="false" data-view="history">History</button>
+      <button id="tab-settings" role="tab" aria-selected="false" data-view="settings">Settings</button>
+    </nav>
+  </header>
+
+  <section id="view-new" class="cols">
+    <form id="tripForm" class="stack" novalidate>
+      <div id="exampleBar" class="example">
+        <span>An example trip is filled in so you can see how it works.</span>
+        <button type="button" class="btn small" id="clearExample">Start a new receipt</button>
+      </div>
+      <div class="panel">
+        <h2>Customer</h2>
+        <label for="custName">Customer name<input id="custName" autocomplete="off"></label>
+        <div class="row">
+          <label for="custEmail">Email<input id="custEmail" type="email" inputmode="email" autocomplete="off" placeholder="name@email.com"></label>
+          <label for="custPhone">Mobile number<input id="custPhone" type="tel" inputmode="tel" autocomplete="off" placeholder="+1 212 555 0100"></label>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Trip</h2>
+        <label for="pickup">Pickup<input id="pickup" autocomplete="off" placeholder="Address or place"></label>
+        <label for="dropoff">Drop-off<input id="dropoff" autocomplete="off" placeholder="Address or place"></label>
+        <div class="row wide-fields">
+          <label for="when">Date and time<input id="when" type="datetime-local"></label>
+          <label for="payMethod">Paid by
+            <select id="payMethod"><option>Card</option><option>Cash</option><option>Zelle</option><option>Other</option></select>
+          </label>
+        </div>
+        <label for="notes">Note on receipt (optional)<textarea id="notes" rows="2" placeholder="Flight number, stops, waiting time"></textarea></label>
+      </div>
+      <div class="panel">
+        <h2>Charges</h2>
+        <div class="row">
+          <label for="fare">Fare ($)<input id="fare" type="number" inputmode="decimal" min="0" step="0.01"></label>
+          <label for="tolls">Tolls and parking ($)<input id="tolls" type="number" inputmode="decimal" min="0" step="0.01"></label>
+          <label for="tip">Tip ($)<input id="tip" type="number" inputmode="decimal" min="0" step="0.01"></label>
+        </div>
+        <p class="note">Tax is added to the fare at the rate set in Settings.</p>
+      </div>
+    </form>
+
+    <div class="stack">
+      <article class="receipt" aria-label="Receipt preview">
+        <div class="r-head"><b id="rBiz"></b><span>RECEIPT<br><span id="rNo"></span></span></div>
+        <div class="r-body">
+          <div class="kv">
+            <div><span class="cap">Customer</span><span id="rCust"></span></div>
+            <div><span class="cap">Date</span><span id="rDate"></span></div>
+          </div>
+          <div class="route">
+            <div class="rail"><span class="dot"></span><i></i><span class="dot end"></span></div>
+            <div class="stop"><span class="cap">Pickup</span><span id="rPick"></span></div>
+            <div class="stop"><span class="cap">Drop-off</span><span id="rDrop"></span></div>
+          </div>
+          <div id="rNoteWrap"><span class="cap">Note</span><span id="rNote"></span></div>
+          <div class="perf"></div>
+          <div class="lines" id="rLines"></div>
+          <div class="r-foot" id="rFoot"></div>
+        </div>
+      </article>
+
+      <div class="actions">
+        <a class="btn primary" id="sendEmail">Email receipt</a>
+        <a class="btn primary" id="sendSms">Text receipt</a>
+        <button type="button" class="btn" id="sharePdf">Share as PDF</button>
+        <button type="button" class="btn" id="copyText">Copy receipt text</button>
+        <button type="button" class="btn wide" id="saveNew">Save and start next receipt</button>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
+      <p class="note" id="frameNote" hidden>This is a preview. Email, text and PDF buttons may do nothing here; they work once the app is installed on the phone. Copy always works.</p>
+    </div>
+  </section>
+
+  <section id="view-history" class="stack" hidden>
+    <p class="note" id="histEmpty">No saved receipts yet. A receipt is saved when you send it or tap “Save and start next receipt”.</p>
+    <button type="button" class="btn" id="exportCsv" hidden>Export all receipts as a spreadsheet</button>
+    <p class="note" id="histStatus" role="status" aria-live="polite"></p>
+    <ul class="hist" id="histList"></ul>
+  </section>
+
+  <section id="view-settings" class="stack" hidden>
+    <div class="panel">
+      <h2>Business details on every receipt</h2>
+      <label for="setBiz">Business name<input id="setBiz"></label>
+      <div class="row">
+        <label for="setPhone">Business phone<input id="setPhone" type="tel"></label>
+        <label for="setEmail">Business email<input id="setEmail" type="email"></label>
+      </div>
+      <div class="row">
+        <label for="setDriver">Driver name<input id="setDriver"></label>
+        <label for="setVehicle">Vehicle / plate<input id="setVehicle"></label>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Tax and wording</h2>
+      <div class="row">
+        <label for="setTaxLabel">Tax name<input id="setTaxLabel"></label>
+        <label for="setTaxRate">Tax rate (%)<input id="setTaxRate" type="number" inputmode="decimal" min="0" step="0.01"></label>
+      </div>
+      <label for="setFooter">Closing line<input id="setFooter"></label>
+      <label for="setTheme">Appearance<select id="setTheme"><option value="auto">Match the phone</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+      <p class="note">Settings and saved receipts are stored on this phone only.</p>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var load = function(k, d){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } };
+  var save = function(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
+
+  var framed = false;
+  var DEFAULTS = { biz:'City to Sky', phone:'', email:'', driver:'', vehicle:'', taxLabel:'NY sales tax', taxRate:8.87, footer:'Thank you for riding with City to Sky.' };
+  var settings = Object.assign({}, DEFAULTS, load('cts_settings', {}));
+  var history = load('cts_receipts', []);
+  var curNo = 0;
+  var FIELDS = ['custName','custEmail','custPhone','pickup','dropoff','when','payMethod','notes','fare','tolls','tip'];
+  var SET = { setBiz:'biz', setPhone:'phone', setEmail:'email', setDriver:'driver', setVehicle:'vehicle', setTaxLabel:'taxLabel', setTaxRate:'taxRate', setFooter:'footer' };
+
+  var cents = function(v){ var n = Math.round(parseFloat(v) * 100); return isFinite(n) && n > 0 ? n : 0; };
+  var money = function(c){ return '$' + (c / 100).toFixed(2); };
+  var noLabel = function(n){ return 'CTS-' + String(n).padStart(4, '0'); };
+  var nextNo = function(){ return history.reduce(function(m, r){ return Math.max(m, r.no); }, 0) + 1; };
+  var nowLocal = function(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
+  var niceDate = function(v){ var d = new Date(v); return isNaN(d) ? '' : d.toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short' }); };
+
+  function read(){
+    var r = { no: curNo };
+    FIELDS.forEach(function(f){ r[f] = $(f).value.trim(); });
+    r.rate = parseFloat(settings.taxRate) || 0;
+    r.taxLabel = settings.taxLabel;
+    r.fareC = cents(r.fare); r.tollsC = cents(r.tolls); r.tipC = cents(r.tip);
+    r.taxC = Math.round(r.fareC * r.rate / 100);
+    r.totalC = r.fareC + r.taxC + r.tollsC + r.tipC;
+    return r;
+  }
+  function fill(r){ FIELDS.forEach(function(f){ $(f).value = r[f] || ''; }); if(!$('payMethod').value) $('payMethod').value = 'Card'; }
+
+  function lineItems(r){
+    var a = [['Fare', money(r.fareC)]];
+    if(r.taxC) a.push([r.taxLabel + ' (' + r.rate + '%)', money(r.taxC)]);
+    if(r.tollsC) a.push(['Tolls and parking', money(r.tollsC)]);
+    if(r.tipC) a.push(['Tip', money(r.tipC)]);
+    return a;
+  }
+  function contactLine(){ return [settings.phone, settings.email].filter(Boolean).join(' | '); }
+  function driverLine(){ return [settings.driver && 'Driver: ' + settings.driver, settings.vehicle && 'Vehicle: ' + settings.vehicle].filter(Boolean).join(' | '); }
+
+  function receiptText(r){
+    var L = [settings.biz.toUpperCase(), 'Receipt ' + noLabel(r.no), niceDate(r.when), '',
+      'Customer: ' + r.custName, 'Pickup: ' + r.pickup, 'Drop-off: ' + r.dropoff];
+    if(r.notes) L.push('Note: ' + r.notes);
+    L.push('');
+    lineItems(r).forEach(function(i){ L.push(i[0] + ': ' + i[1]); });
+    L.push('TOTAL: ' + money(r.totalC), 'Paid by: ' + r.payMethod, '');
+    if(driverLine()) L.push(driverLine());
+    L.push(settings.footer);
+    if(contactLine()) L.push(contactLine());
+    return L.join('\n');
+  }
+
+  function missing(r){
+    var m = [];
+    if(!r.custName) m.push('customer name');
+    if(!r.pickup) m.push('pickup');
+    if(!r.dropoff) m.push('drop-off');
+    if(!r.fareC) m.push('fare');
+    return m;
+  }
+  function setLink(a, href){ if(href){ a.href = href; a.removeAttribute('aria-disabled'); } else { a.removeAttribute('href'); a.setAttribute('aria-disabled', 'true'); } }
+  function say(msg, bad){ var s = $('status'); s.textContent = msg; s.className = bad ? 'bad' : ''; }
+
+  function render(){
+    var r = read();
+    $('brandName').textContent = settings.biz;
+    $('rBiz').textContent = settings.biz;
+    $('rNo').textContent = noLabel(r.no);
+    $('rCust').textContent = r.custName || 'Customer name';
+    $('rDate').textContent = niceDate(r.when) || 'Date';
+    $('rPick').textContent = r.pickup || 'Pickup address';
+    $('rDrop').textContent = r.dropoff || 'Drop-off address';
+    $('rNoteWrap').hidden = !r.notes; $('rNote').textContent = r.notes;
+    var box = $('rLines'); box.textContent = '';
+    lineItems(r).concat([['Paid by', r.payMethod]]).forEach(function(i){ addLine(box, i[0], i[1]); });
+    addLine(box, 'Total', money(r.totalC), 'total');
+    $('rFoot').textContent = [driverLine(), settings.footer, contactLine()].filter(Boolean).join('\n');
+    $('rFoot').style.whiteSpace = 'pre-line';
+
+    var ok = !missing(r).length, txt = encodeURIComponent(receiptText(r));
+    var subj = encodeURIComponent(settings.biz + ' receipt ' + noLabel(r.no));
+    var mailOk = ok && /^\S+@\S+\.\S+$/.test(r.custEmail);
+    var phone = r.custPhone.replace(/[^\d+]/g, '');
+    setLink($('sendEmail'), mailOk ? 'mailto:' + encodeURIComponent(r.custEmail) + '?subject=' + subj + '&body=' + txt : '');
+    setLink($('sendSms'), ok && phone.length >= 7 ? 'sms:' + phone + '?&body=' + txt : '');
+  }
+  function addLine(box, k, v, cls){
+    var d = document.createElement('div'), a = document.createElement('span'), b = document.createElement('span');
+    if(cls) d.className = cls; a.textContent = k; b.textContent = v; d.append(a, b); box.append(d);
+  }
+
+  function keep(){
+    var r = read(); r.savedAt = Date.now();
+    var i = history.findIndex(function(h){ return h.no === r.no; });
+    if(i >= 0) history[i] = r; else history.unshift(r);
+    save('cts_receipts', history); renderHistory();
+  }
+  function startNew(){
+    curNo = nextNo();
+    fill({ when: nowLocal(), payMethod: 'Card' });
+    $('exampleBar').hidden = true; render(); $('custName').focus();
+  }
+  function ready(what){
+    var r = read(), m = missing(r);
+    if(m.length){ say('Add the ' + m.join(', ') + ' first.', true); return null; }
+    if(what === 'email' && !$('sendEmail').hasAttribute('href')){ say('Add the customer’s email address first.', true); return null; }
+    if(what === 'sms' && !$('sendSms').hasAttribute('href')){ say('Add the customer’s mobile number first.', true); return null; }
+    return r;
+  }
+
+  function makePdf(r){
+    var doc = new window.jspdf.jsPDF({ unit:'pt', format:'a5' });
+    var W = doc.internal.pageSize.getWidth(), x = 36, y = 0, R = W - 36;
+    doc.setFillColor(20, 33, 58); doc.rect(0, 0, W, 78, 'F');
+    doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(22);
+    doc.text(settings.biz.toUpperCase(), x, 48);
+    doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+    doc.text('RECEIPT ' + noLabel(r.no), R, 48, { align:'right' });
+    doc.setTextColor(20, 33, 58); y = 108;
+    var block = function(cap, val){
+      doc.setFontSize(8); doc.setTextColor(88, 103, 126); doc.text(cap.toUpperCase(), x, y); y += 14;
+      doc.setFontSize(12); doc.setTextColor(20, 33, 58);
+      var lines = doc.splitTextToSize(val || '-', R - x); doc.text(lines, x, y); y += lines.length * 15 + 8;
+    };
+    block('Customer', r.custName); block('Date', niceDate(r.when));
+    block('Pickup', r.pickup); block('Drop-off', r.dropoff);
+    if(r.notes) block('Note', r.notes);
+    doc.setDrawColor(201, 211, 223); doc.setLineDashPattern([4, 3], 0); doc.line(x, y, R, y); doc.setLineDashPattern([], 0); y += 22;
+    doc.setFontSize(11);
+    lineItems(r).concat([['Paid by', r.payMethod]]).forEach(function(i){ doc.text(i[0], x, y); doc.text(i[1], R, y, { align:'right' }); y += 18; });
+    y += 4; doc.line(x, y, R, y); y += 26;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(18);
+    doc.text('TOTAL', x, y); doc.text(money(r.totalC), R, y, { align:'right' }); y += 34;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(88, 103, 126);
+    [driverLine(), settings.footer, contactLine()].filter(Boolean).forEach(function(t){
+      var lines = doc.splitTextToSize(t, R - x); doc.text(lines, x, y); y += lines.length * 12 + 2; });
+    return doc;
+  }
+
+  function renderHistory(){
+    var ul = $('histList'); ul.textContent = '';
+    $('histEmpty').hidden = history.length > 0;
+    $('exportCsv').hidden = !history.length;
+    history.forEach(function(r){
+      var li = document.createElement('li'), who = document.createElement('div'), sm = document.createElement('small'),
+          amt = document.createElement('span'), ops = document.createElement('div'),
+          open = document.createElement('button'), del = document.createElement('button');
+      who.className = 'who'; who.textContent = r.custName;
+      sm.textContent = noLabel(r.no) + ' · ' + niceDate(r.when); who.append(sm);
+      amt.className = 'amt'; amt.textContent = money(r.totalC);
+      ops.className = 'ops'; open.className = del.className = 'btn small'; open.type = del.type = 'button';
+      open.textContent = 'Open'; del.textContent = 'Delete';
+      open.onclick = function(){ curNo = r.no; fill(r); $('exampleBar').hidden = true; show('new'); render(); say('Opened ' + noLabel(r.no) + '.'); };
+      del.onclick = function(){
+        if(del.dataset.sure){ history = history.filter(function(h){ return h.no !== r.no; }); save('cts_receipts', history); renderHistory(); }
+        else { del.dataset.sure = '1'; del.textContent = 'Tap again to delete'; }
+      };
+      ops.append(open, del); li.append(who, amt, ops); ul.append(li);
+    });
+  }
+
+  function show(view){
+    ['new','history','settings'].forEach(function(v){
+      $('view-' + v).hidden = v !== view;
+      $('tab-' + v).setAttribute('aria-selected', String(v === view));
+    });
+  }
+
+  // Wiring
+  document.querySelectorAll('.tabs button').forEach(function(b){ b.onclick = function(){ show(b.dataset.view); }; });
+  $('tripForm').addEventListener('input', function(){ say(''); render(); });
+  $('tripForm').addEventListener('submit', function(e){ e.preventDefault(); });
+  $('clearExample').onclick = startNew;
+  $('saveNew').onclick = function(){ if(!ready()) return; var n = noLabel(curNo); keep(); startNew(); say('Saved ' + n + '. Ready for the next trip.'); };
+  $('sendEmail').onclick = function(e){ if(!ready('email')){ e.preventDefault(); return; } keep(); say('Opening your mail app with the receipt filled in. Press send there.'); };
+  $('sendSms').onclick = function(e){ if(!ready('sms')){ e.preventDefault(); return; } keep(); say('Opening Messages with the receipt filled in. Press send there.'); };
+  $('copyText').onclick = function(){
+    var r = ready(); if(!r) return;
+    var t = receiptText(r);
+    var done = function(){ say('Receipt text copied.'); };
+    var fallback = function(){ var ta = document.createElement('textarea'); ta.value = t; document.body.append(ta); ta.select();
+      try{ document.execCommand('copy'); done(); }catch(e){ say('Could not copy on this device.', true); } ta.remove(); };
+    try{ navigator.clipboard.writeText(t).then(done, fallback); }catch(e){ fallback(); }
+  };
+  $('sharePdf').onclick = async function(){
+    var r = ready(); if(!r) return;
+    if(!window.jspdf){ say('The PDF tool did not load. Check the internet connection and reopen the app.', true); return; }
+    keep();
+    try{
+      var doc = makePdf(r), name = 'CityToSky-' + noLabel(r.no) + '.pdf';
+      var file = new File([doc.output('blob')], name, { type:'application/pdf' });
+      if(navigator.canShare && navigator.canShare({ files:[file] })){
+        await navigator.share({ files:[file], title: settings.biz + ' receipt ' + noLabel(r.no) });
+        say('Pick Mail or Messages in the share sheet to send the PDF.');
+      } else { doc.save(name); say(framed ? 'PDF sharing works once the app is installed on the phone.' : 'PDF downloaded.'); }
+    }catch(e){ if(e && e.name !== 'AbortError') say('Could not share the PDF on this device. Use Email or Text instead.', true); }
+  };
+  function csvCell(v){
+    v = String(v == null ? '' : v);
+    if(/^[=@]/.test(v) || (/^[+\-]/.test(v) && !/^[+\-]?[\d\s().\-]+$/.test(v))) v = "'" + v;
+    return '"' + v.replace(/"/g, '""') + '"';
+  }
+  function buildCsv(){
+    var rows = [['Receipt','Date','Customer','Email','Mobile','Pickup','Drop-off','Paid by','Fare','Tax','Tolls and parking','Tip','Total','Note']];
+    history.slice().sort(function(x, y){ return x.no - y.no; }).forEach(function(r){
+      var m = function(c){ return ((c || 0) / 100).toFixed(2); };
+      rows.push([noLabel(r.no), niceDate(r.when), r.custName, r.custEmail, r.custPhone, r.pickup, r.dropoff, r.payMethod, m(r.fareC), m(r.taxC), m(r.tollsC), m(r.tipC), m(r.totalC), r.notes]);
+    });
+    return '﻿' + rows.map(function(row){ return row.map(csvCell).join(','); }).join('\r\n');
+  }
+  $('exportCsv').onclick = async function(){
+    var out = $('histStatus'), name = 'CityToSky-receipts-' + nowLocal().slice(0, 10) + '.csv';
+    try{
+      var file = new File([buildCsv()], name, { type:'text/csv' });
+      if(navigator.canShare && navigator.canShare({ files:[file] })){
+        await navigator.share({ files:[file], title:'City to Sky receipts' });
+        out.textContent = 'Choose “Save to Files” or email it to yourself to keep the backup.';
+      } else {
+        var link = document.createElement('a'); link.href = URL.createObjectURL(file); link.download = name;
+        document.body.append(link); link.click(); link.remove();
+        out.textContent = framed ? 'Export works once the app is installed on the phone.' : 'Saved ' + name + ' (' + history.length + ' receipts).';
+      }
+    }catch(e){ if(e && e.name !== 'AbortError') out.textContent = 'Could not export on this device.'; }
+  };
+  Object.keys(SET).forEach(function(id){
+    $(id).value = settings[SET[id]];
+    $(id).addEventListener('input', function(){ settings[SET[id]] = $(id).value; save('cts_settings', settings); render(); });
+  });
+
+  var theme = load('cts_theme', 'auto');
+  var applyTheme = function(){ if(theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', theme); };
+  if(theme !== 'auto') applyTheme();
+  $('setTheme').value = theme;
+  $('setTheme').addEventListener('change', function(){ theme = $('setTheme').value; save('cts_theme', theme); applyTheme(); });
+
+  try{ framed = window.self !== window.top; }catch(e){ framed = true; }
+  $('frameNote').hidden = !framed;
+
+  // First view: an example trip on a brand-new install, otherwise a blank next receipt.
+  curNo = nextNo();
+  if(history.length){ fill({ when: nowLocal(), payMethod:'Card' }); $('exampleBar').hidden = true; }
+  else fill({ custName:'Jordan Example', custEmail:'jordan@example.com', pickup:'350 5th Ave, New York, NY 10118', dropoff:'JFK Airport, Terminal 4', when: nowLocal(), payMethod:'Card', fare:'70.00' });
+  renderHistory(); render();
+})();
+</script>
+
+</body>
+</html>
