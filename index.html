@@ -101,6 +101,9 @@ input::-webkit-date-and-time-value{text-align:left}
 .hist .who small{display:block;color:var(--muted);font:400 13px/1.4 var(--mono)}
 .hist .amt{font:500 16px/1 var(--mono);font-variant-numeric:tabular-nums}
 .hist .ops{display:flex;gap:8px}
+.cloud-state{display:flex;align-items:center;gap:10px;margin:0;overflow-wrap:anywhere;min-width:0}
+.dot-ok{width:10px;height:10px;border-radius:50%;background:#1F9D55;flex:none}
+#cloudMsg.bad{color:var(--warn)}
 </style>
 
 <div class="wrap">
@@ -190,6 +193,7 @@ input::-webkit-date-and-time-value{text-align:left}
     <p class="note" id="histEmpty">No saved receipts yet. A receipt is saved when you send it or tap “Save and start next receipt”.</p>
     <button type="button" class="btn" id="exportCsv" hidden>Export all receipts as a spreadsheet</button>
     <p class="note" id="histStatus" role="status" aria-live="polite"></p>
+    <p class="note" id="histCloud"></p>
     <ul class="hist" id="histList"></ul>
   </section>
 
@@ -214,12 +218,46 @@ input::-webkit-date-and-time-value{text-align:left}
       </div>
       <label for="setFooter">Closing line<input id="setFooter"></label>
       <label for="setTheme">Appearance<select id="setTheme"><option value="auto">Match the phone</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
-      <p class="note">Settings and saved receipts are stored on this phone only.</p>
+    </div>
+    <div class="panel" id="cloudPanel">
+      <h2>Cloud backup</h2>
+      <p class="note" id="cloudOff">Cloud backup is not set up yet, so receipts are saved on this phone only.</p>
+      <form id="cloudForm" class="stack" novalidate hidden>
+        <p class="note">Sign in to keep every receipt online. Sign in with the same email on a new phone and all receipts come back.</p>
+        <div class="row">
+          <label for="cloudEmail">Email<input id="cloudEmail" type="email" inputmode="email" autocomplete="username"></label>
+          <label for="cloudPass">Password<input id="cloudPass" type="password" autocomplete="current-password" placeholder="At least 6 characters"></label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn primary" id="cloudSignIn">Sign in</button>
+          <button type="button" class="btn" id="cloudCreate">Create account</button>
+          <button type="button" class="btn small wide" id="cloudReset">Forgot password</button>
+        </div>
+      </form>
+      <div id="cloudOn" class="stack" hidden>
+        <p class="cloud-state"><span class="dot-ok" aria-hidden="true"></span><span>Backing up as <b id="cloudWho"></b></span></p>
+        <button type="button" class="btn" id="cloudSignOut">Sign out</button>
+      </div>
+      <p class="note" id="cloudMsg" role="status" aria-live="polite"></p>
     </div>
   </section>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+/* ============ CLOUD BACKUP SETUP ============
+   Paste the values from your Firebase project (Project settings > Your apps > SDK setup and configuration > Config)
+   between the quotes below. Leave them empty to keep receipts on the phone only. */
+var FIREBASE_CONFIG = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+/* ============================================ */
+</script>
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
@@ -230,7 +268,8 @@ input::-webkit-date-and-time-value{text-align:left}
   var DEFAULTS = { biz:'City to Sky', phone:'', email:'', driver:'', vehicle:'', taxLabel:'NY sales tax', taxRate:8.87, footer:'Thank you for riding with City to Sky.' };
   var settings = Object.assign({}, DEFAULTS, load('cts_settings', {}));
   var history = load('cts_receipts', []);
-  var curNo = 0;
+  var curNo = 0, isNew = true;
+  var cloud = { auth:null, db:null, user:null, unsub:null, timer:null };
   var FIELDS = ['custName','custEmail','custPhone','pickup','dropoff','when','payMethod','notes','fare','waitMin','wait','tolls','tip'];
   var SET = { setBiz:'biz', setPhone:'phone', setEmail:'email', setDriver:'driver', setVehicle:'vehicle', setTaxLabel:'taxLabel', setTaxRate:'taxRate', setFooter:'footer' };
 
@@ -321,9 +360,11 @@ input::-webkit-date-and-time-value{text-align:left}
     var i = history.findIndex(function(h){ return h.no === r.no; });
     if(i >= 0) history[i] = r; else history.unshift(r);
     save('cts_receipts', history); renderHistory();
+    isNew = false;
+    pushReceipt(r);
   }
   function startNew(){
-    curNo = nextNo();
+    curNo = nextNo(); isNew = true;
     fill({ when: nowLocal(), payMethod: 'Card' });
     $('exampleBar').hidden = true; render(); $('custName').focus();
   }
@@ -377,9 +418,9 @@ input::-webkit-date-and-time-value{text-align:left}
       amt.className = 'amt'; amt.textContent = money(r.totalC);
       ops.className = 'ops'; open.className = del.className = 'btn small'; open.type = del.type = 'button';
       open.textContent = 'Open'; del.textContent = 'Delete';
-      open.onclick = function(){ curNo = r.no; fill(r); $('exampleBar').hidden = true; show('new'); render(); say('Opened ' + noLabel(r.no) + '.'); };
+      open.onclick = function(){ curNo = r.no; isNew = false; fill(r); $('exampleBar').hidden = true; show('new'); render(); say('Opened ' + noLabel(r.no) + '.'); };
       del.onclick = function(){
-        if(del.dataset.sure){ history = history.filter(function(h){ return h.no !== r.no; }); save('cts_receipts', history); renderHistory(); }
+        if(del.dataset.sure){ history = history.filter(function(h){ return h.no !== r.no; }); save('cts_receipts', history); renderHistory(); dropReceipt(r.no); }
         else { del.dataset.sure = '1'; del.textContent = 'Tap again to delete'; }
       };
       ops.append(open, del); li.append(who, amt, ops); ul.append(li);
@@ -449,10 +490,111 @@ input::-webkit-date-and-time-value{text-align:left}
       }
     }catch(e){ if(e && e.name !== 'AbortError') out.textContent = 'Could not export on this device.'; }
   };
+  function fillSettings(){ Object.keys(SET).forEach(function(id){ $(id).value = settings[SET[id]]; }); }
+  fillSettings();
   Object.keys(SET).forEach(function(id){
-    $(id).value = settings[SET[id]];
-    $(id).addEventListener('input', function(){ settings[SET[id]] = $(id).value; save('cts_settings', settings); render(); });
+    $(id).addEventListener('input', function(){ settings[SET[id]] = $(id).value; save('cts_settings', settings); render(); pushSettings(); });
   });
+
+  // ---------- Cloud backup (Firebase) ----------
+  var cfgOk = !!(window.FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+  var plain = function(o){ return JSON.parse(JSON.stringify(o)); };
+  function cloudSay(msg, bad){ var m = $('cloudMsg'); m.textContent = msg || ''; m.className = 'note' + (bad ? ' bad' : ''); }
+  function receiptsRef(){ return cloud.db.collection('users').doc(cloud.user.uid).collection('receipts'); }
+  function settingsRef(){ return cloud.db.collection('users').doc(cloud.user.uid).collection('meta').doc('settings'); }
+  function cloudErr(e){
+    var c = (e && e.code) || '';
+    if(/invalid-credential|wrong-password|user-not-found|invalid-login/.test(c)) return 'The email or password is wrong.';
+    if(/email-already-in-use/.test(c)) return 'An account with this email already exists. Use Sign in instead.';
+    if(/weak-password/.test(c)) return 'Use a password with at least 6 characters.';
+    if(/invalid-email|missing-email/.test(c)) return 'Enter a valid email address.';
+    if(/missing-password/.test(c)) return 'Enter your password.';
+    if(/network-request-failed|unavailable/.test(c)) return 'No internet connection. Receipts are still saved on this phone and will upload later.';
+    if(/operation-not-allowed/.test(c)) return 'Email sign-in is not switched on in Firebase yet (Authentication > Sign-in method > Email/Password).';
+    if(/admin-restricted|not-allowed/.test(c)) return 'New accounts are switched off for this app. Use Sign in.';
+    if(/permission-denied/.test(c)) return 'The cloud refused to save. Check the Firestore rules in Firebase.';
+    if(/too-many-requests/.test(c)) return 'Too many tries. Wait a few minutes and try again.';
+    return 'Something went wrong with cloud backup (' + (c || 'unknown error') + ').';
+  }
+  function renderCloud(){
+    var on = !!cloud.user;
+    $('cloudOff').hidden = cfgOk;
+    $('cloudForm').hidden = !cfgOk || on || !cloud.auth;
+    $('cloudOn').hidden = !on;
+    if(on) $('cloudWho').textContent = cloud.user.email;
+    $('histCloud').textContent = on ? 'Backed up to the cloud. Sign in on any phone to see these receipts.'
+      : (cfgOk ? 'Saved on this phone only. Sign in under Settings > Cloud backup to keep them online.' : 'Saved on this phone only.');
+  }
+  function pushReceipt(r){
+    if(!cloud.user) return;
+    receiptsRef().doc(String(r.no)).set(plain(r)).catch(function(e){ cloudSay(cloudErr(e), true); });
+  }
+  function dropReceipt(no){
+    if(!cloud.user) return;
+    receiptsRef().doc(String(no)).delete().catch(function(e){ cloudSay(cloudErr(e), true); });
+  }
+  function pushSettings(){
+    if(!cloud.user) return;
+    clearTimeout(cloud.timer);
+    cloud.timer = setTimeout(function(){ settingsRef().set(plain(settings)).catch(function(e){ cloudSay(cloudErr(e), true); }); }, 800);
+  }
+  function loadScript(src){
+    return new Promise(function(ok, fail){ var t = document.createElement('script'); t.src = src; t.onload = ok; t.onerror = fail; document.head.append(t); });
+  }
+  async function onUser(u){
+    if(cloud.unsub){ cloud.unsub(); cloud.unsub = null; }
+    cloud.user = u; renderCloud();
+    if(!u) return;
+    cloudSay('Syncing…');
+    try{
+      var s = await settingsRef().get();
+      if(s.exists){ settings = Object.assign({}, DEFAULTS, s.data()); save('cts_settings', settings); fillSettings(); render(); }
+      else await settingsRef().set(plain(settings));
+      // Upload receipts that are on this phone but not yet in the cloud.
+      var have = {}, snap = await receiptsRef().get();
+      snap.forEach(function(d){ have[d.id] = true; });
+      var batch = cloud.db.batch(), n = 0;
+      history.forEach(function(r){ if(!have[String(r.no)]){ batch.set(receiptsRef().doc(String(r.no)), plain(r)); n++; } });
+      if(n) await batch.commit();
+      cloudSay(n ? 'Uploaded ' + n + ' receipt' + (n > 1 ? 's' : '') + ' from this phone.' : '');
+    }catch(e){ cloudSay(cloudErr(e), true); }
+    cloud.unsub = receiptsRef().onSnapshot(function(qs){
+      var list = []; qs.forEach(function(d){ list.push(d.data()); });
+      list.sort(function(a, b){ return b.no - a.no; });
+      history = list; save('cts_receipts', history); renderHistory();
+      if(isNew && history.some(function(h){ return h.no === curNo; })){ curNo = nextNo(); render(); }
+      else if(isNew && curNo < nextNo()){ curNo = nextNo(); render(); }
+    }, function(e){ cloudSay(cloudErr(e), true); });
+  }
+  async function startCloud(){
+    renderCloud();
+    if(!cfgOk) return;
+    try{
+      var base = 'https://www.gstatic.com/firebasejs/10.12.2/';
+      await loadScript(base + 'firebase-app-compat.js');
+      await Promise.all([loadScript(base + 'firebase-auth-compat.js'), loadScript(base + 'firebase-firestore-compat.js')]);
+      firebase.initializeApp(FIREBASE_CONFIG);
+      cloud.auth = firebase.auth(); cloud.db = firebase.firestore();
+      try{ await cloud.db.enablePersistence({ synchronizeTabs:true }); }catch(e){}
+      renderCloud();
+      cloud.auth.onAuthStateChanged(onUser);
+    }catch(e){ cloudSay('Could not reach cloud backup. Check the internet connection and reopen the app. Receipts are still saved on this phone.', true); }
+  }
+  function creds(){ return [$('cloudEmail').value.trim(), $('cloudPass').value]; }
+  $('cloudForm').addEventListener('submit', async function(e){
+    e.preventDefault(); var c = creds(); cloudSay('Signing in…');
+    try{ await cloud.auth.signInWithEmailAndPassword(c[0], c[1]); $('cloudPass').value = ''; }catch(err){ cloudSay(cloudErr(err), true); }
+  });
+  $('cloudCreate').onclick = async function(){
+    var c = creds(); cloudSay('Creating account…');
+    try{ await cloud.auth.createUserWithEmailAndPassword(c[0], c[1]); $('cloudPass').value = ''; }catch(err){ cloudSay(cloudErr(err), true); }
+  };
+  $('cloudReset').onclick = async function(){
+    var em = $('cloudEmail').value.trim();
+    if(!em){ cloudSay('Type your email above first, then tap Forgot password.', true); return; }
+    try{ await cloud.auth.sendPasswordResetEmail(em); cloudSay('A password reset email is on its way to ' + em + '.'); }catch(err){ cloudSay(cloudErr(err), true); }
+  };
+  $('cloudSignOut').onclick = async function(){ await cloud.auth.signOut(); cloudSay('Signed out. Receipts on this phone are kept.'); };
 
   var theme = load('cts_theme', 'auto');
   var applyTheme = function(){ if(theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', theme); };
@@ -467,7 +609,7 @@ input::-webkit-date-and-time-value{text-align:left}
   curNo = nextNo();
   if(history.length){ fill({ when: nowLocal(), payMethod:'Card' }); $('exampleBar').hidden = true; }
   else fill({ custName:'Jordan Example', custEmail:'jordan@example.com', pickup:'350 5th Ave, New York, NY 10118', dropoff:'JFK Airport, Terminal 4', when: nowLocal(), payMethod:'Card', fare:'70.00' });
-  renderHistory(); render();
+  renderHistory(); render(); startCloud();
 })();
 </script>
 
